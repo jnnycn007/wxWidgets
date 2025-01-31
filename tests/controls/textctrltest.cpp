@@ -483,12 +483,13 @@ void TextCtrlTestCase::Url()
     delete m_text;
     CreateText(wxTE_RICH | wxTE_AUTO_URL);
 
-    EventCounter url(m_text, wxEVT_TEXT_URL);
-
     m_text->AppendText("http://www.wxwidgets.org");
 
     wxUIActionSimulator sim;
     sim.MouseMove(m_text->ClientToScreen(wxPoint(5, 5)));
+
+    EventCounter url(m_text, wxEVT_TEXT_URL);
+
     sim.MouseClick();
     wxYield();
 
@@ -1487,7 +1488,8 @@ TEST_CASE("wxTextCtrl::Get/SetRTFValue", "[wxTextCtrl][rtf]")
 }
 #endif
 
-#ifdef __WXMSW__
+// SearchText() is not implemented in wxGTK2.
+#if !defined(__WXGTK__) || defined(__WXGTK3__)
 TEST_CASE("wxTextCtrl::SearchText", "[wxTextCtrl][search]")
 {
     wxWindow* const parent = wxTheApp->GetTopWindow();
@@ -1557,6 +1559,10 @@ And there is a mispeled word)");
     results = text->SearchText(wxTextSearch(L"very").SearchDirection(wxTextSearch::Direction::Down).MatchCase().MatchWholeWord().Start(results.m_start + 1));
     CHECK_FALSE(results);
 
+    // bad start position
+    results = text->SearchText(wxTextSearch(L"very").SearchDirection(wxTextSearch::Direction::Down).MatchCase().MatchWholeWord().Start(2000));
+    CHECK_FALSE(results); // started past the length of the control
+
     // go up from the end
     results = text->SearchText(wxTextSearch(L"very").SearchDirection(wxTextSearch::Direction::Up).MatchCase().MatchWholeWord());
     CHECK(results);
@@ -1591,7 +1597,7 @@ And there is a mispeled word)");
     CHECK(results.m_start == 0);
     CHECK(results.m_end == 6);
 }
-#endif
+#endif // !__WXGTK2__
 
 TEST_CASE("wxTextCtrl::InitialCanUndo", "[wxTextCtrl][undo]")
 {

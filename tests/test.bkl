@@ -261,6 +261,7 @@
             controls/windowtest.cpp
             controls/dialogtest.cpp
             events/clone.cpp
+            events/enterleave.cpp
             <!--
                 Duplicate this file here to test GUI event loops too.
              -->
@@ -285,6 +286,7 @@
             misc/garbage.cpp
             misc/safearrayconverttest.cpp
             misc/settings.cpp
+            misc/textwrap.cpp
             <!--
                 This one is intentionally duplicated here (it is also part of
                 non-GUI test) as sockets behave differently in console and GUI

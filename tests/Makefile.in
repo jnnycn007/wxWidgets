@@ -251,6 +251,7 @@ TEST_GUI_OBJECTS =  \
 	test_gui_windowtest.o \
 	test_gui_dialogtest.o \
 	test_gui_clone.o \
+	test_gui_enterleave.o \
 	test_gui_evtlooptest.o \
 	test_gui_propagation.o \
 	test_gui_keyboard.o \
@@ -268,6 +269,7 @@ TEST_GUI_OBJECTS =  \
 	test_gui_garbage.o \
 	test_gui_safearrayconverttest.o \
 	test_gui_settings.o \
+	test_gui_textwrap.o \
 	test_gui_socket.o \
 	test_gui_tlw.o \
 	test_gui_dataview.o \
@@ -1165,6 +1167,9 @@ test_gui_dialogtest.o: $(srcdir)/controls/dialogtest.cpp $(TEST_GUI_ODEP)
 test_gui_clone.o: $(srcdir)/events/clone.cpp $(TEST_GUI_ODEP)
 	$(CXXC) -c -o $@ $(TEST_GUI_CXXFLAGS) $(srcdir)/events/clone.cpp
 
+test_gui_enterleave.o: $(srcdir)/events/enterleave.cpp $(TEST_GUI_ODEP)
+	$(CXXC) -c -o $@ $(TEST_GUI_CXXFLAGS) $(srcdir)/events/enterleave.cpp
+
 test_gui_evtlooptest.o: $(srcdir)/events/evtlooptest.cpp $(TEST_GUI_ODEP)
 	$(CXXC) -c -o $@ $(TEST_GUI_CXXFLAGS) $(srcdir)/events/evtlooptest.cpp
 
@@ -1215,6 +1220,9 @@ test_gui_safearrayconverttest.o: $(srcdir)/misc/safearrayconverttest.cpp $(TEST_
 
 test_gui_settings.o: $(srcdir)/misc/settings.cpp $(TEST_GUI_ODEP)
 	$(CXXC) -c -o $@ $(TEST_GUI_CXXFLAGS) $(srcdir)/misc/settings.cpp
+
+test_gui_textwrap.o: $(srcdir)/misc/textwrap.cpp $(TEST_GUI_ODEP)
+	$(CXXC) -c -o $@ $(TEST_GUI_CXXFLAGS) $(srcdir)/misc/textwrap.cpp
 
 test_gui_socket.o: $(srcdir)/net/socket.cpp $(TEST_GUI_ODEP)
 	$(CXXC) -c -o $@ $(TEST_GUI_CXXFLAGS) $(srcdir)/net/socket.cpp

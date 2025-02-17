@@ -1415,7 +1415,7 @@ public:
     you can now write
 
     @code
-    sizer->Add(ctrl, wxSizerFlags().Expand().Border(wxALL, 10));
+    sizer->Add(ctrl, wxSizerFlags().Expand().DoubleBorder(wxALL));
     @endcode
 
     This is more readable and also allows you to create wxSizerFlags objects which
@@ -1423,7 +1423,7 @@ public:
 
     @code
     wxSizerFlags flagsExpand(1);
-        flagsExpand.Expand().Border(wxALL, 10);
+        flagsExpand.Expand().DoubleBorder(wxALL);
 
         sizer->Add(ctrl1, flagsExpand);
         sizer->Add(ctrl2, flagsExpand);
@@ -2116,5 +2116,12 @@ public:
             arguments had to be overridden in the derived classes instead.
     */
     virtual void RepositionChildren(const wxSize& minSize);
+
+    /**
+       Inform sizer about the first direction that has been decided (by
+       parent item).  Returns true if it made use of the information (and
+       recalculated min size).
+    */
+    virtual bool InformFirstDirection(int direction, int size, int availableOtherDir);
 };
 

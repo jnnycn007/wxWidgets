@@ -946,7 +946,7 @@ MyFrame::MyFrame(wxWindow* parent,
     tb5->AddTool(ID_SampleItem+31, "Test", wxArtProvider::GetBitmapBundle(wxART_QUESTION));
     tb5->AddTool(ID_SampleItem+32, "Test", wxArtProvider::GetBitmapBundle(wxART_INFORMATION));
     tb5->AddTool(ID_SampleItem+33, "Test", wxArtProvider::GetBitmapBundle(wxART_WARNING));
-    tb5->AddTool(ID_SampleItem+34, "Test", wxArtProvider::GetBitmapBundle(wxART_MISSING_IMAGE));
+    tb5->AddTool(ID_SampleItem+34, "Test with help", wxArtProvider::GetBitmapBundle(wxART_MISSING_IMAGE), wxNullBitmap, wxITEM_NORMAL, "Short Help", "This is long help on the status bar", nullptr);
     tb5->SetCustomOverflowItems(prepend_items, append_items);
     tb5->Realize();
 
@@ -1803,6 +1803,10 @@ private:
     {
         wxString strH;
         const wxString strW = str.BeforeFirst('x', &strH);
+
+        // Special case which wouldn't be parse by ToUInt() below.
+        if ( strW == "-1" && strH == strW )
+            return wxDefaultSize;
 
         unsigned int w, h;
         if ( !strW.ToUInt(&w) || !strH.ToUInt(&h) )

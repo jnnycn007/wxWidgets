@@ -261,6 +261,7 @@
             controls/windowtest.cpp
             controls/dialogtest.cpp
             events/clone.cpp
+            events/enterleave.cpp
             <!--
                 Duplicate this file here to test GUI event loops too.
              -->
@@ -285,6 +286,7 @@
             misc/garbage.cpp
             misc/safearrayconverttest.cpp
             misc/settings.cpp
+            misc/textwrap.cpp
             <!--
                 This one is intentionally duplicated here (it is also part of
                 non-GUI test) as sockets behave differently in console and GUI
@@ -452,7 +454,7 @@
 
 
     <fragment format="autoconf">
-failtest: failtest_combobox failtest_evthandler failtest_weakref failtest_allheaders
+failtest: failtest_combobox failtest_evthandler failtest_msgid failtest_weakref failtest_allheaders
 
 failtest_combobox:
 	@$(RM) test_gui_comboboxtest.o
@@ -472,6 +474,13 @@ failtest_evthandler:
 	done; \
 	exit 0
 
+failtest_msgid:
+	@$(RM) test_intltest.o
+	if $(MAKE) CPPFLAGS=-DTEST_INVALID_MSGID test_intltest.o 2>/dev/null; then \
+	    echo "*** Compilation with TEST_INVALID_MSGID unexpectedly succeeded.">&amp;2; \
+	    exit 1; \
+	fi;
+
 failtest_weakref:
 	@$(RM) test_weakref.o
 	if $(MAKE) CPPFLAGS=-DTEST_INVALID_INCOMPLETE_WEAKREF test_weakref.o 2>/dev/null; then \
@@ -488,7 +497,20 @@ failtest_allheaders:
 	fi; \
 	exit 0
 
-.PHONY: failtest failtest_combobox failtest_evthandler failtest_weakref failtest_allheaders
+.PHONY: failtest failtest_combobox failtest_evthandler failtest_msgid failtest_weakref failtest_allheaders
     </fragment>
 
+    <!-- Test that each header can be included independently, i.e. is self-contained. -->
+    <fragment format="autoconf">
+allheaders_selfcontained:
+	@if [ -z "$$check_headers" ]; then \
+	    check_headers=`sed -ne '/BEGIN STANDALONE CHECK/,/END STANDALONE CHECK/s/#include &lt;\(.\+\)&gt;$$/\1/p' $(top_srcdir)/tests/allheaders.h`; \
+	fi; \
+	for h in $$check_headers; do \
+	    if ! $(CXX) -fsyntax-only -Wall -Werror -x c++ $(TEST_ALLHEADERS_CXXFLAGS) $(top_srcdir)/include/$$h; then \
+		echo "*** Checking $$h failed.">&amp;2; \
+		exit 1; \
+	    fi; \
+	done
+    </fragment>
 </makefile>

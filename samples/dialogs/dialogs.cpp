@@ -3428,7 +3428,7 @@ static void InitAboutInfoMinimal(wxAboutDialogInfo& info)
                         wxVERSION_NUM_DOT_STRING
                     ));
     info.SetDescription("This sample shows different wxWidgets dialogs.");
-    info.SetCopyright("Copyright (C) 1998-2023 wxWidgets dev team.");
+    info.SetCopyright("Copyright (C) 1992-2025 wxWidgets dev team.");
 }
 
 static void InitAboutInfoWebsite(wxAboutDialogInfo& info)
@@ -4074,7 +4074,7 @@ wxPanel* SettingsDialog::CreateGeneralSettingsPage(wxWindow* parent)
     itemSizer8->Add(checkBox6, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
     item0->Add(itemSizer8, 0, wxGROW|wxALL, 0);
 
-    topSizer->Add( item0, wxSizerFlags(1).Expand().Border(wxALL, 5) );
+    topSizer->Add( item0, wxSizerFlags(1).Expand().Border(wxALL) );
 
     panel->SetSizerAndFit(topSizer);
 
@@ -4132,7 +4132,7 @@ wxPanel* SettingsDialog::CreateAestheticSettingsPage(wxWindow* parent)
     item0->Add(itemSizer5, 0, wxGROW|wxLEFT|wxRIGHT, 5);
 #endif
 
-    topSizer->Add( item0, wxSizerFlags(1).Expand().Border(wxALL, 5) );
+    topSizer->Add( item0, wxSizerFlags(1).Expand().Border(wxALL) );
     topSizer->AddSpacer(5);
 
     panel->SetSizerAndFit(topSizer);
